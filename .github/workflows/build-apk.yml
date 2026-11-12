@@ -1,0 +1,30 @@
+name: Convert HTML to APK
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Run Web to App Action
+        uses: darkshredder/web-to-app-action@v1
+        with:
+          build-folder-path: './'
+          app-name: 'DKU Docs Editor'
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: apk/
+          
